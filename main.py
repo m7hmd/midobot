@@ -11,31 +11,42 @@ bot = telebot.TeleBot(BOT_TOKEN)
 server = Flask(__name__)
 logger = telebot.logger
 logger.setLevel(logging.DEBUG)
+@bot.message_handler(commands=['start'])
+def send1(message):
+    bot.send_message(chat_id=420953620, text="- The Bot Is Running ....")
+@bot.message_handler(commands=['get'])
+def send(message):
+    uid = message.text.replace("/get ", '')
+    file = requests.get("https://pastebin.com/raw/0kPLPnxC").text.splitlines()
+    numD = 0
+    numL = 0
+    numE = 0
+    numW = 0
+    infoM = bot.send_message(chat_id=420953620, text=f"- ID : {uid}\nDone Check : {numL}\nDone Send : {numD}\nDon't Have Coins : {numE}\nDon't Send : {numW}")
+    while True:
+        fil = file[numL]
+        url = requests.get(f"https://powerlesspopularcoolingfan.mohammedhaiderz.repl.co/?target={fil}&userid={uid}&submit=submit").text
+        if "DONE :" in url:
+            numF1 = url.split("DONE : ")[1]
+            numF = (numF1[0] + numF1[1] + numF1[2] + numF1[3]).replace("<", '')
+            bot.send_message(chat_id= 420953620, text=f"- Done Send Followers Count : {numF} ..")
+            numD += 1
+            numL += 1
+            bot.edit_message_text(chat_id= 420953620 , message_id=infoM.message_id, text=f"- ID : {uid}\nDone Check : {numL}\nDone Send : {numD}\nDon't Have Coins : {numE}\nDon't Send : {numW}")
 
-@bot.message_handler(content_types=["text"])
-def S(message):
-    if message.text == "/start":
-        bot.send_message(message.chat.id, "Send List ......")
-    elif "/" in message.text:
-        bot.send_message(message.chat.id, "Send List ......")
-    else:
-        mes = message.text.splitlines()
-        for username in mes:
-            username1 = username.replace("@", "")
-            url = "https://tamtam.chat/" + str(username1)
-            headers = {
-                "User-Agent": generate_user_agent(),
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Accept-Language": "ar-EG,ar;q=0.9,en-US;q=0.8,en;q=0.7"}
-            response = requests.get(url, headers=headers)
-            if "Public channel" in response.text or "Open channel" in response.text:
-                if 'data-url="' in response.text:
-                    responseTime = requests.get(str((response.text.split('data-url="')[1]).split('">')[0])).text.split("<time>")[1].split(" </time>")[0]
-                    bot.send_message(message.chat.id, f"URL :: {url}\nTime :: {responseTime.replace('января в','1').replace('февраля','2').replace('марта','3').replace('мая','5').replace('июля','7').replace('августа','8').replace('октября','10') .replace('июня','6')}")
-                else:
-                    bot.send_message(message.chat.id, f"URL :: {url}\nTime :: Don't Have Post")
-            time.sleep(5)
+        elif "Sending orders less than 150 is temporarily disabled. Please try again in another hour." in url:
+            numL += 1
+            numE += 1
+            bot.edit_message_text(chat_id= 420953620 , message_id=infoM.message_id, text=f"- ID : {uid}\nDone Check : {numL}\nDone Send : {numD}\nDon't Have Coins : {numE}\nDon't Send : {numW}")
+
+        elif '"You have to wait until the previous order is completed."' in url:
+            numW +=1
+            bot.send_message(chat_id= 420953620, text= f"ID : {uid}\n- Sleep 15 minutes ....")
+            bot.edit_message_text(chat_id= 420953620 , message_id=infoM.message_id, text=f"- ID : {uid}\nDone Check : {numL}\nDone Send : {numD}\nDon't Have Coins : {numE}\nDon't Send : {numW}")
+            time.sleep(900)
+        else:
+            numL += 1
+            bot.edit_message_text(chat_id=420953620, message_id=infoM.message_id,text=f"- ID : {uid}\nDone Check : {numL}\nDone Send : {numD}\nDon't Have Coins : {numE}\nDon't Send : {numW}")
 
 @server.route(f"/{BOT_TOKEN}", methods=["POST"])
 def redirect_message():
