@@ -13,7 +13,7 @@ logger = telebot.logger
 logger.setLevel(logging.DEBUG)
 @bot.message_handler(commands=['start'])
 def send1(message):
-    bot.send_message(chat_id=420953620, text="- The Bot Is Running ....")
+    bot.send_message(chat_id=message.chat.id, text="- The Bot Is Running ....")
 @bot.message_handler(commands=['get'])
 def send(message):
     uid = message.text.replace("/get ", '')
