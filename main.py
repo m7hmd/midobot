@@ -11,7 +11,7 @@ bot = telebot.TeleBot(BOT_TOKEN)
 server = Flask(__name__)
 logger = telebot.logger
 logger.setLevel(logging.DEBUG)
-file = requests,get("https://pastebin.com/raw/0kPLPnxC").text.splitlines()
+file = requests.get("https://pastebin.com/raw/0kPLPnxC").text.splitlines()
 @bot.message_handler(commands=['start'])
 def send1(message):
     bot.send_message(chat_id=message.chat.id, text="- The Bot Is Running ....")
