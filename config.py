@@ -1,2 +1,2 @@
-BOT_TOKEN = "5169952049:AAHF8Ytv_OgyvOfNeqipxNETwaQQfREHuIw"
-APP_URL = "https://telebobt.herokuapp.com/" + BOT_TOKEN
+BOT_TOKEN = "5245849897:AAGm3VpWKSKF1bPsk6XKmiBZlhpnBpAW7hY"
+APP_URL = "https://midddddddbot.herokuapp.com/" + BOT_TOKEN
