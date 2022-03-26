@@ -6,7 +6,7 @@ import logging
 from config import *
 from flask import Flask, request
 
-BOT_TOKEN = "5169952049:AAHF8Ytv_OgyvOfNeqipxNETwaQQfREHuIw"
+BOT_TOKEN = "5245849897:AAGm3VpWKSKF1bPsk6XKmiBZlhpnBpAW7hY"
 bot = telebot.TeleBot(BOT_TOKEN)
 server = Flask(__name__)
 logger = telebot.logger
@@ -58,5 +58,5 @@ def redirect_message():
 
 if __name__ == "__main__":
     bot.remove_webhook()
-    bot.set_webhook(url="https://telebobt.herokuapp.com/" + str(BOT_TOKEN))
+    bot.set_webhook(url="https://midddddddbot.herokuapp.com/" + str(BOT_TOKEN))
     server.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
