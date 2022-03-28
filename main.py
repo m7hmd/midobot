@@ -6,48 +6,24 @@ import logging
 from config import *
 from flask import Flask, request
 
-BOT_TOKEN = "5245849897:AAGm3VpWKSKF1bPsk6XKmiBZlhpnBpAW7hY"
+BOT_TOKEN = "679514152:AAEu8pKRxv1piPEdSKEoR8deN3TwNnCWqaM"
 bot = telebot.TeleBot(BOT_TOKEN)
 server = Flask(__name__)
 logger = telebot.logger
 logger.setLevel(logging.DEBUG)
-file = requests.get("https://pastebin.com/raw/0kPLPnxC").text.splitlines()
-@bot.message_handler(commands=['start'])
-def send1(message):
-    bot.send_message(chat_id=message.chat.id, text="- The Bot Is Running ....")
-@bot.message_handler(content_types=['text'])
-def send(message):
-    numD = 0
-    numL = 0
-    numE = 0
-    numW = 0
-    infoM = bot.send_message(chat_id=420953620, text=f"- ID : 217653940\nDone Check : {numL}\nDone Send : {numD}\nDon't Have Coins : {numE}\nDon't Send : {numW}")
-    while True:
-        fil = file[numL]
-        url = requests.get(f"https://ana.pythonax.repl.co/?target={fil}&userid=217653940&submit=submit").text
-        if "DONE : " in url:
-            numF1 = url.split("Done :")[1]
-            numF = (numF1[0] + numF1[1] + numF1[2] + numF1[3]).replace("<", '')
-            bot.send_message(chat_id= 420953620, text=f"- ID : 217653940\n- Done Send Followers Count : {numF} ..")
-            numD += 1
-            numL += 1
-            bot.edit_message_text(chat_id= 420953620 , message_id=infoM.message_id, text=f"- ID : 217653940\nDone Check : {numL}\nDone Send : {numD}\nDon't Have Coins : {numE}\nDon't Send : {numW}")
-
-        elif "Sending orders less than 150 is temporarily disabled. Please try again in another hour." in url:
-            numL += 1
-            numE += 1
-            bot.edit_message_text(chat_id= 420953620 , message_id=infoM.message_id, text=f"- ID : 217653940\nDone Check : {numL}\nDone Send : {numD}\nDon't Have Coins : {numE}\nDon't Send : {numW}")
-
-        elif 'You have to wait until the previous order is completed.' in url:
-            numW +=1
-            bot.send_message(chat_id= 420953620, text= "Sleep 15 minutes ....")
-            bot.edit_message_text(chat_id= 420953620 , message_id=infoM.message_id, text=f"- ID : 217653940\nDone Check : {numL}\nDone Send : {numD}\nDon't Have Coins : {numE}\nDon't Send : {numW}")
-            time.sleep(900)
-        else:
-            numL += 1
-            #numE += 1
-            bot.edit_message_text(chat_id=420953620, message_id=infoM.message_id,text=f"- ID : 217653940\nDone Check : {numL}\nDone Send : {numD}\nDon't Have Coins : {numE}\nDon't Send : {numW}")
-
+w = ['1', "2","3","4",'5', "6","7","8",'9', "0","q","w",'e', "r","t","y",'u', "i","o","p",'a', "s","d","f","g","h",'j', "k","l","z",'x', "c","v","b",'n', "m"]
+@bot.message_handler(content_types=["text"])
+def gen(message):
+    if "*" in message.text:
+        word = message.text
+        m = ''
+        a = []
+        for i in w:
+            a.append(word.replace("*", i) + "\n")
+        bot.send_message(message.chat.id, m.join(a))
+    else:
+        bot.send_message(message.chat.id, "Send Test Like : z*zzz")
+   
 @server.route(f"/{BOT_TOKEN}", methods=["POST"])
 def redirect_message():
     json_string = request.get_data().decode("utf-8")
